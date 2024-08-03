@@ -1,0 +1,59 @@
+@import "./modern-normalize.css";
+
+:root {
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+figure,
+p,
+ol,
+ul {
+  margin: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding-inline: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+img {
+  display: block;
+  max-inline-size: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
