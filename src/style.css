@@ -3,7 +3,7 @@ body {
     width: 100vw;
     padding: 0;
     display: grid;
-    grid-template-rows: 1fr 8fr;
+    grid-template-rows: 1fr 16fr;
     justify-content: center;
     align-items: center;
 }
@@ -13,7 +13,7 @@ body {
     display: grid;
     justify-content: center;
     align-items: center;
-    grid-template-rows: 0.5fr 0.5fr 2fr 8fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
     gap: 0px;
 }
 
@@ -29,7 +29,7 @@ body {
 .game {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 1rem;
 }
 
 .end-place{
@@ -93,10 +93,15 @@ body {
 }
 
 .ship-space {
-    background-color: green;
+    background-color: inherit;
 }
 
 .ship {
     display: flex;
     flex-wrap: nowrap;
+    background-color: green;
+}
+
+.gray {
+    background-color: grey;
 }

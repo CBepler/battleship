@@ -6,6 +6,7 @@ import setUpBoard from "./setupBoard";
 import getSpaceIndex from "./getSpaceIndex";
 import placeRandomShips from "./placeShipRandom";
 import Gameboard from "./gameboard";
+import renderShipState from "./renderShipState";
 
 const player1 = new Player;
 const player2 = new Player;
@@ -41,6 +42,7 @@ versus.addEventListener("click", () => {
     directions.textContent = "Player 1 place ships";
     placeP1.classList.remove("hide");
     placeP2.classList.add("hide");
+    placeSingle.classList.add("hide");
 })
 
 placeP1.addEventListener("click", () => {
@@ -107,7 +109,7 @@ placeSingle.addEventListener("click", () => {
     board1.classList.add("no-click");
     board2.classList.remove("no-click");
     renderBoard(board1, player1, false);
-    renderBoard(board2, player2, false);
+    renderBoard(board2, player2, true);
     directions.textContent = "Play Game";
 })
 
@@ -181,6 +183,7 @@ function setplayState(e) {
     if(player1.board.allSunk() || player2.board.allSunk()) {
         handleEndGame();
     }
+    renderShipState(e.currentTarget.classList.contains("player1") ? player1 : player2, e.currentTarget);
     if(nextTurn) {
         if(!singlePlayer) {
             renderBoard(board1, player1, true);
