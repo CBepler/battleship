@@ -102,6 +102,22 @@ body {
     background-color: green;
 }
 
-.gray {
-    background-color: grey;
+.space.white {
+    background-color: white;
+}
+
+.space:hover {
+    background-color: lightcyan;
+}
+
+.space.green {
+    background-color: green;
+}
+
+.space.blue {
+    background-color: blue;
+}
+
+.space.red {
+    background-color: red;
 }
