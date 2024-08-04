@@ -10,7 +10,6 @@
       <div class="title">Welcome to Battleship</div>
       <div class="directions"></div>
       <div class="buttons">
-        <button class="place-button">Done Placing</button>
         <button class="single">Single Player</button>
         <button class="versus">Local Versus</button>
       </div>
@@ -75,9 +74,19 @@
         </div>
       </div>
     </div>
-    <div class="boards">
-      <div class="board player1 no-click"></div>
-      <div class="board player2 no-click"></div>
+    <div class="game">
+      <div class="end-place">
+        <button class="place-button-p1 hide">Done Placing</button>
+        <button class="place-button-p2 hide">Done Placing</button>
+      </div>
+      <div class="play-labels">
+        <div>Player 1</div>
+        <div>Player 2</div>
+      </div>
+      <div class="boards">
+        <div class="board player1 no-click"></div>
+        <div class="board player2 no-click"></div>
+      </div>
     </div>
   </body>
 </html>
