@@ -4,6 +4,8 @@ import Player from "./player"
 import renderBoard from "./renderBoard";
 import setUpBoard from "./setupBoard";
 import getSpaceIndex from "./getSpaceIndex";
+import placeRandomShips from "./placeShipRandom";
+import Gameboard from "./gameboard";
 
 const player1 = new Player;
 const player2 = new Player;
@@ -20,11 +22,15 @@ const versus = document.querySelector(".versus");
 
 const placeP1 = document.querySelector(".place-button-p1");
 const placeP2 = document.querySelector(".place-button-p2");
+const placeSingle = document.querySelector(".place-button-single");
+
+let singlePlayer = false;
 
 setUpBoard(boards);
 
 let turn = 0;
 versus.addEventListener("click", () => {
+    singlePlayer = false;
     turn = 0;
     board1.addEventListener("click", placeShipState);
     board1.classList.remove("no-click");
@@ -85,15 +91,39 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
+placeSingle.addEventListener("click", () => {
+    if(!player1.board.validShipState()) {
+        player1.board.resetBoard();
+        renderBoard(board1, player1, false);
+        directions.textContent = "Please place the proper ships. Player 1 place ships again";
+        return;
+    }
+    board1.removeEventListener("click", placeShipState);
+    placeRandomShips(player2);
+    placeSingle.classList.add("hide");
+    for(const board of boards) {
+        board.addEventListener("click", setplayState);
+    }
+    board1.classList.add("no-click");
+    board2.classList.remove("no-click");
+    renderBoard(board1, player1, false);
+    renderBoard(board2, player2, false);
+    directions.textContent = "Play Game";
+})
+
 single.addEventListener("click", () => {
+    singlePlayer = true;
+    placeP1.classList.add("hide");
+    placeP2.classList.add("hide");
     turn = 0;
     board1.addEventListener("click", placeShipState);
     board1.classList.remove("no-click");
     player1.board.resetBoard();
     player2.board.resetBoard();
-    renderBoard(board1, player1);
-    renderBoard(board2, player2);
-    directions.textContent = "Place Ships";
+    renderBoard(board1, player1, false);
+    renderBoard(board2, player2, false);
+    directions.textContent = "Player 1 place ships";
+    placeSingle.classList.remove("hide");
 })
 
 let previousClick = [];
@@ -152,11 +182,21 @@ function setplayState(e) {
         handleEndGame();
     }
     if(nextTurn) {
-        renderBoard(board1, player1, true);
-        renderBoard(board2, player2, true);
-        board1.classList.toggle("no-click");
-        board2.classList.toggle("no-click");
+        if(!singlePlayer) {
+            renderBoard(board1, player1, true);
+            renderBoard(board2, player2, true);
+            board1.classList.toggle("no-click");
+            board2.classList.toggle("no-click");
+        }
         turn++;
+        if(singlePlayer && turn % 2 === 1) {
+            const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
+            const pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
+            player1.board.recieveAttack(pos);
+            turn++
+            renderBoard(board1, player1, false);
+            return;
+        }
         directions.textContent = "Pass computer to player " + ((turn % 2) === 0 ? 1 : 2) + " and press enter to play turn";
     }
 }
