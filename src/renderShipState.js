@@ -1,6 +1,3 @@
-const shipsP1 = document.querySelector(".pieces1");
-const shipsP2 = document.querySelector(".pieces2");
-
 function renderShipState(player, board) {
     const children = Array.prototype.slice.call(board.parentElement.children);
     let ships = children[0] == board ? document.querySelector(".pieces1") : document.querySelector(".pieces2");

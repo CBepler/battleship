@@ -7,6 +7,7 @@ import getSpaceIndex from "./getSpaceIndex";
 import placeRandomShips from "./placeShipRandom";
 import Gameboard from "./gameboard";
 import renderShipState from "./renderShipState";
+import resetShipState from "./resetShipState";
 
 const player1 = new Player;
 const player2 = new Player;
@@ -31,6 +32,7 @@ setUpBoard(boards);
 
 let turn = 0;
 versus.addEventListener("click", () => {
+    previousClick = []
     singlePlayer = false;
     turn = 0;
     board1.addEventListener("click", placeShipState);
@@ -43,6 +45,7 @@ versus.addEventListener("click", () => {
     placeP1.classList.remove("hide");
     placeP2.classList.add("hide");
     placeSingle.classList.add("hide");
+    resetShipState();
 })
 
 placeP1.addEventListener("click", () => {
@@ -114,6 +117,7 @@ placeSingle.addEventListener("click", () => {
 })
 
 single.addEventListener("click", () => {
+    previousClick = []
     singlePlayer = true;
     placeP1.classList.add("hide");
     placeP2.classList.add("hide");
@@ -126,6 +130,7 @@ single.addEventListener("click", () => {
     renderBoard(board2, player2, false);
     directions.textContent = "Player 1 place ships";
     placeSingle.classList.remove("hide");
+    resetShipState();
 })
 
 let previousClick = [];
