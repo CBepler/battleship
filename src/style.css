@@ -3,7 +3,7 @@ body {
     width: 100vw;
     padding: 0;
     display: grid;
-    grid-template-rows: 2fr 10fr;
+    grid-template-rows: 1fr 8fr;
     justify-content: center;
     align-items: center;
 }
@@ -13,17 +13,42 @@ body {
     display: grid;
     justify-content: center;
     align-items: center;
-    grid-template-rows: 1fr 1fr 2fr 8fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr 8fr;
+    gap: 0px;
 }
 
-.title {
+.title, .directions {
     text-align: center;
 }
 
 .buttons {
     display: flex;
-    justify-content: center;
-    gap: 3rem;
+    justify-content: space-around;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.end-place{
+    display: flex;
+    justify-content: space-around;
+}
+
+.play-labels {
+    display: flex;
+    justify-content: space-around;
+}
+
+.place-button-p1, .place-button-p2 {
+    display: flex;
+    justify-content: space-around;
+}
+
+.hide {
+    display: none;
 }
 
 .boards {
