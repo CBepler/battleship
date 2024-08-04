@@ -6,6 +6,7 @@ body {
     grid-template-rows: 1fr 16fr;
     justify-content: center;
     align-items: center;
+    background-color: rgb(210, 210, 210);
 }
 
 .header{
@@ -102,22 +103,26 @@ body {
     background-color: green;
 }
 
-.space.white {
-    background-color: white;
+.space.water {
+    background-color: lightblue;
 }
 
 .space:hover {
-    background-color: lightcyan;
+    background-color: lightgray;
 }
 
 .space.green {
     background-color: green;
 }
 
-.space.blue {
-    background-color: blue;
+.space.white {
+    background-color: white;
 }
 
 .space.red {
     background-color: red;
+}
+
+.gray {
+    background-color: gray;
 }

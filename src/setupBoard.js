@@ -6,6 +6,7 @@ function setUpBoard(boards) {
             for(const board of boards) {
                 const space = document.createElement("div");
                 space.classList.add("space");
+                space.classList.add("water");
                 board.appendChild(space);
             }
         }
