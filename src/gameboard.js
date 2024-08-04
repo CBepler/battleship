@@ -54,11 +54,14 @@ class Gameboard {
             end: endPos,
         })
 
-        for(let i = startPos[shiftIndex]; i <= endPos[shiftIndex]; i++) {
+        const lesser = startPos[shiftIndex] < endPos[shiftIndex] ? startPos : endPos;
+        const greater = startPos[shiftIndex] > endPos[shiftIndex] ? startPos : endPos;
+
+        for(let i = lesser[shiftIndex]; i <= greater[shiftIndex]; i++) {
             if(constPos === 0) {
                 this.board[startPos[0]][i] = 1;
             } else {
-                this.board[i][startPos[0]] = 1;
+                this.board[i][startPos[1]] = 1;
             }        
         }
     }
