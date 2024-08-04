@@ -3,9 +3,14 @@ import Ship from "./ship";
 const boardSize = 9;
 
 class Gameboard {
+    static boardLength = 10;
     constructor() { //0: empty      1: ship present     2: miss      3: hit
         this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
-        this.boardLength = 10;
+        this.ships = [];
+    }
+
+    resetBoard() {
+        this.board = Array.from({ length: 10 }, () => Array(10).fill(0));
         this.ships = [];
     }
 
@@ -31,8 +36,10 @@ class Gameboard {
     getShip(pos) {
         for(const ship of this.ships) {
             const shiftIndex = ship.start[0] === ship.end[0] ? 1 : 0;
-            const constPos = shiftIndex === 0 ? 1 : 0; 
-            if((ship.start[constPos] == pos[constPos]) && (pos[shiftIndex] >= ship.start[shiftIndex] && pos[shiftIndex] <= ship.end[shiftIndex])) {
+            const constPos = shiftIndex === 0 ? 1 : 0;
+            const lesser = ship.start[shiftIndex] > ship.end[shiftIndex] ? ship.end : ship.start;
+            const greater = ship.start[shiftIndex] > ship.end[shiftIndex] ? ship.start : ship.end;
+            if((ship.start[constPos] == pos[constPos]) && (pos[shiftIndex] >= lesser[shiftIndex] && pos[shiftIndex] <= greater[shiftIndex])) {
                 return ship;
             }
         }
@@ -46,7 +53,7 @@ class Gameboard {
 
         const shiftIndex = startPos[0] === endPos[0] ? 1 : 0;
         const constPos = shiftIndex === 0 ? 1 : 0; 
-        const length = Math.abs(endPos[shiftIndex] - startPos[shiftIndex]);
+        const length = Math.abs(endPos[shiftIndex] - startPos[shiftIndex]) + 1;
 
         this.ships.push({
             ship: new Ship(length),
@@ -73,9 +80,24 @@ class Gameboard {
         } else if (this.board[pos[0]][pos[1]] === 1) {
             this.board[pos[0]][pos[1]] = 3;
             this.getShip(pos).ship.hit();
-            return true;
         }
         return false;
+    }
+
+    validShipState() {
+        let validLengths = [2, 3, 3, 4, 5];
+        if(this.ships.length !== 5) {
+            return false;
+        }
+        for(const ship of this.ships) {
+            const length = ship.ship.length;
+            const index = validLengths.indexOf(length);
+            if(index === -1) {
+                return false;
+            }
+            validLengths.splice(index, 1);
+        }
+        return validLengths.length === 0;
     }
 
     allSunk() {
