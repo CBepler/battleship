@@ -75,6 +75,13 @@ class Gameboard {
         }
     }
 
+    isValidAttack(pos) {
+        if (pos[0] < 0 || pos[0] > boardSize || pos[1] < 0 || pos[1] > boardSize) {
+            return false;
+        }
+        return this.board[pos[0]][pos[1]] === 0 || this.board[pos[0]][pos[1]] === 1;
+    }
+
     recieveAttack(pos) {
         if(this.board[pos[0]][pos[1]] === 0) {
             this.board[pos[0]][pos[1]] = 2;

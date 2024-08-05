@@ -32,6 +32,7 @@ setUpBoard(boards);
 
 let turn = 0;
 versus.addEventListener("click", () => {
+    hitSpaces = [];
     previousClick = []
     singlePlayer = false;
     turn = 0;
@@ -117,6 +118,7 @@ placeSingle.addEventListener("click", () => {
 })
 
 single.addEventListener("click", () => {
+    hitSpaces = [];
     previousClick = []
     singlePlayer = true;
     placeP1.classList.add("hide");
@@ -182,22 +184,36 @@ function handleEndGame() {
     }
 }
 
+let hitSpaces = [];
 function doComputerTurn() {
-    let lastHit = false;
     let pos;
     while(true) {
-        if(lastHit) {
-            if(pos[0] > 0) {
-                pos[0]--;
-            } else {
-                if(pos[1] > 0){
-                    pos[1]--;
-                } else {
-                    pos[0]++;
+        if(hitSpaces.length !== 0) {
+            while(true) {
+                const current = hitSpaces[hitSpaces.length - 1];
+                if(player1.board.isValidAttack([current[0] - 1, current[1]])) {
+                    pos = [...current];
+                    pos[0]--;
+                    break;
                 }
+                if(player1.board.isValidAttack([current[0] + 1, current[1]])) {
+                    pos = [...current];
+                    pos[0]++;
+                    break;
+                }
+                if(player1.board.isValidAttack([current[0], current[1] - 1])) {
+                    pos = [...current];
+                    pos[1]--;
+                    break;
+                }
+                if(player1.board.isValidAttack([current[0], current[1] + 1])) {
+                    pos = [...current];
+                    pos[1]++;
+                    break;
+                }
+                hitSpaces.pop();
             }
-        }
-        else {
+        } else {
             const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
             pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
         }
@@ -218,7 +234,7 @@ function doComputerTurn() {
         if(player1.board.board[pos[0]][pos[1]] !== 3) {
             break;
         }
-        lastHit = true;
+        hitSpaces.push(pos);
     }
 }
 
