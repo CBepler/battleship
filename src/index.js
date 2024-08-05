@@ -198,9 +198,25 @@ function setplayState(e) {
         }
         turn++;
         if(singlePlayer && turn % 2 === 1) {
-            const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
-            const pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
-            player1.board.recieveAttack(pos);
+            let pos;
+            do {
+                const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
+                pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
+                while(player1.board.board[pos[0]][pos[1]] !== 0 && player1.board.board[pos[0]][pos[1]] !== 1) {
+                    pos[1]++
+                    if(pos[1] > 9) {
+                        pos[1] = 0;
+                        pos[0]++;
+                        if(pos[0] > 9) {
+                            pos[0] = 0;
+                        }
+                    }
+                }
+                player1.board.recieveAttack(pos);
+                if(player1.board.allSunk()) {
+                    handleEndGame();
+                }
+            } while( player1.board.board[pos[0]][pos[1]] === 3)
             turn++
             renderBoard(board1, player1, false);
             return;
