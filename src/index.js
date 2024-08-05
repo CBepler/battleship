@@ -188,32 +188,31 @@ let hitSpaces = [];
 function doComputerTurn() {
     let pos;
     while(true) {
-        if(hitSpaces.length !== 0) {
-            while(true) {
-                const current = hitSpaces[hitSpaces.length - 1];
-                if(player1.board.isValidAttack([current[0] - 1, current[1]])) {
-                    pos = [...current];
-                    pos[0]--;
-                    break;
-                }
-                if(player1.board.isValidAttack([current[0] + 1, current[1]])) {
-                    pos = [...current];
-                    pos[0]++;
-                    break;
-                }
-                if(player1.board.isValidAttack([current[0], current[1] - 1])) {
-                    pos = [...current];
-                    pos[1]--;
-                    break;
-                }
-                if(player1.board.isValidAttack([current[0], current[1] + 1])) {
-                    pos = [...current];
-                    pos[1]++;
-                    break;
-                }
-                hitSpaces.pop();
+        while(hitSpaces.length !== 0) {
+            const current = hitSpaces[hitSpaces.length - 1];
+            if(player1.board.isValidAttack([current[0] - 1, current[1]])) {
+                pos = [...current];
+                pos[0]--;
+                break;
             }
-        } else {
+            if(player1.board.isValidAttack([current[0] + 1, current[1]])) {
+                pos = [...current];
+                pos[0]++;
+                break;
+            }
+            if(player1.board.isValidAttack([current[0], current[1] - 1])) {
+                pos = [...current];
+                pos[1]--;
+                break;
+            }
+            if(player1.board.isValidAttack([current[0], current[1] + 1])) {
+                pos = [...current];
+                pos[1]++;
+                break;
+            }
+            hitSpaces.pop();
+        }
+        if(hitSpaces.length === 0) {
             const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
             pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
         }
@@ -256,6 +255,7 @@ function setplayState(e) {
         if(singlePlayer && turn % 2 === 1) {
             doComputerTurn();
             turn++
+            renderShipState(player1, board1);
             renderBoard(board1, player1, false);
             return;
         }
