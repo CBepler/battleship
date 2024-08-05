@@ -182,6 +182,28 @@ function handleEndGame() {
     }
 }
 
+function doComputerTurn() {
+    let pos;
+    do {
+        const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
+        pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
+        while(player1.board.board[pos[0]][pos[1]] !== 0 && player1.board.board[pos[0]][pos[1]] !== 1) {
+            pos[1]++
+            if(pos[1] > 9) {
+                pos[1] = 0;
+                pos[0]++;
+                if(pos[0] > 9) {
+                    pos[0] = 0;
+                }
+            }
+        }
+        player1.board.recieveAttack(pos);
+        if(player1.board.allSunk()) {
+            handleEndGame();
+        }
+    } while( player1.board.board[pos[0]][pos[1]] === 3)
+}
+
 function setplayState(e) {
     let nextTurn = handleSpaceClick(e.target);
     renderBoard(e.currentTarget, e.currentTarget.classList.contains("player1") ? player1 : player2, true)
@@ -198,25 +220,7 @@ function setplayState(e) {
         }
         turn++;
         if(singlePlayer && turn % 2 === 1) {
-            let pos;
-            do {
-                const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
-                pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
-                while(player1.board.board[pos[0]][pos[1]] !== 0 && player1.board.board[pos[0]][pos[1]] !== 1) {
-                    pos[1]++
-                    if(pos[1] > 9) {
-                        pos[1] = 0;
-                        pos[0]++;
-                        if(pos[0] > 9) {
-                            pos[0] = 0;
-                        }
-                    }
-                }
-                player1.board.recieveAttack(pos);
-                if(player1.board.allSunk()) {
-                    handleEndGame();
-                }
-            } while( player1.board.board[pos[0]][pos[1]] === 3)
+            doComputerTurn();
             turn++
             renderBoard(board1, player1, false);
             return;
