@@ -183,10 +183,24 @@ function handleEndGame() {
 }
 
 function doComputerTurn() {
+    let lastHit = false;
     let pos;
-    do {
-        const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
-        pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
+    while(true) {
+        if(lastHit) {
+            if(pos[0] > 0) {
+                pos[0]--;
+            } else {
+                if(pos[1] > 0){
+                    pos[1]--;
+                } else {
+                    pos[0]++;
+                }
+            }
+        }
+        else {
+            const index = Math.floor(Math.random() * (Gameboard.boardLength * Gameboard.boardLength));
+            pos = [Math.floor(index / Gameboard.boardLength), index % Gameboard.boardLength];
+        }
         while(player1.board.board[pos[0]][pos[1]] !== 0 && player1.board.board[pos[0]][pos[1]] !== 1) {
             pos[1]++
             if(pos[1] > 9) {
@@ -201,7 +215,11 @@ function doComputerTurn() {
         if(player1.board.allSunk()) {
             handleEndGame();
         }
-    } while( player1.board.board[pos[0]][pos[1]] === 3)
+        if(player1.board.board[pos[0]][pos[1]] !== 3) {
+            break;
+        }
+        lastHit = true;
+    }
 }
 
 function setplayState(e) {
